@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package junk;
+option go_package = "grpc_streaming_example;junk";
+
+service Junk {
+  rpc TakeJunk(stream JunkMsg) returns (EmptyMsg) {};
+}
+
+message EmptyMsg {
+
+}
+
+message JunkMsg {
+  string junk = 1;
+}
