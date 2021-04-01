@@ -37,7 +37,23 @@ func main() {
 				if b%1000000 == 0 {
 					fmt.Println("Sent %v bytes ...", b)
 				}
-				stream.Send(&junk.JunkMsg{Junk: "Some Junk"})
+				err = stream.Send(&junk.JunkMsg{Junk: "Some Junk"})
+				if err != nil {
+					fmt.Printf("ERROR: %v \n", err)
+					con.Close()
+					var cerr error
+					con, cerr = grpc.Dial(addr, opts)
+					if cerr != nil {
+						fmt.Printf("COnnection eerror %v", cerr)
+					}
+					defer con.Close()
+
+					client = junk.NewJunkClient(con)
+					stream, err = client.TakeJunk(context.Background())
+					if err != nil {
+						fmt.Printf("Error starting stream %v", err)
+					}
+				}
 				b += 9
 			}
 		}(&wg)

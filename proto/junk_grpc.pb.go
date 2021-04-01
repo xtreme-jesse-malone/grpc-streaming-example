@@ -11,7 +11,6 @@ import (
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-// Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
 // JunkClient is the client API for Junk service.
@@ -30,7 +29,7 @@ func NewJunkClient(cc grpc.ClientConnInterface) JunkClient {
 }
 
 func (c *junkClient) TakeJunk(ctx context.Context, opts ...grpc.CallOption) (Junk_TakeJunkClient, error) {
-	stream, err := c.cc.NewStream(ctx, &Junk_ServiceDesc.Streams[0], "/junk.Junk/TakeJunk", opts...)
+	stream, err := c.cc.NewStream(ctx, &_Junk_serviceDesc.Streams[0], "/junk.Junk/TakeJunk", opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -88,7 +87,7 @@ type UnsafeJunkServer interface {
 }
 
 func RegisterJunkServer(s grpc.ServiceRegistrar, srv JunkServer) {
-	s.RegisterService(&Junk_ServiceDesc, srv)
+	s.RegisterService(&_Junk_serviceDesc, srv)
 }
 
 func _Junk_TakeJunk_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -117,10 +116,7 @@ func (x *junkTakeJunkServer) Recv() (*JunkMsg, error) {
 	return m, nil
 }
 
-// Junk_ServiceDesc is the grpc.ServiceDesc for Junk service.
-// It's only intended for direct use with grpc.RegisterService,
-// and not to be introspected or modified (even as a copy)
-var Junk_ServiceDesc = grpc.ServiceDesc{
+var _Junk_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "junk.Junk",
 	HandlerType: (*JunkServer)(nil),
 	Methods:     []grpc.MethodDesc{},

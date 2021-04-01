@@ -31,11 +31,12 @@ func (*junkserver) TakeJunk(stream junk.Junk_TakeJunkServer) error {
 		thing, err := stream.Recv()
 
 		if err == io.EOF {
+			fmt.Println("Got EOF, closing connection\n")
 			return stream.SendAndClose(&junk.EmptyMsg{})
 		}
 		stuff := thing.GetJunk()
 		if stuff != "" {
-			fmt.Printf("Got: %v\n", thing.GetJunk())
+			//fmt.Printf("Got: %v\n", thing.GetJunk())
 		}
 	}
 }
